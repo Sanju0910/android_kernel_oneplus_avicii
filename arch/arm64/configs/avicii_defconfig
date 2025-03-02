@@ -1,10 +1,10 @@
 # 
-# NeverSettle Kernel v2.11
-# Linux/arm64 4.19.318 Kernel Configuration
+# NeverSettle Kernel v3.0
+# Linux/arm64 4.19.325 Kernel Configuration
 #
 
 #
-# Compiler: Android (12059595, +pgo, +bolt, +lto, +mlgo, based on r530567) clang version 19.0.0 (https://android.googlesource.com/toolchain/llvm-project 97a699bf4812a18fb657c2779f5296a4ab2694d2)
+# Compiler: Android (13065274, +pgo, +bolt, +lto, +mlgo, based on r547379) clang version 20.0.0 (https://android.googlesource.com/toolchain/llvm-project f142f8afe21bceb00fb495468aa0b5043e98c419)
 #
 CONFIG_OPLUS_SYSTEM_KERNEL_QCOM=y
 # CONFIG_OPLUS_SYSTEM_KERNEL_MTK is not set

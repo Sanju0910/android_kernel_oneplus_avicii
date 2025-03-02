@@ -61,9 +61,11 @@ builddir="${kernel_dir}/build"
 avbtool=${kernel_dir}/scripts/avb/avbtool.py
 ZIMAGE=$kernel_dir/out/arch/arm64/boot/Image.gz-dtb
 DTBOIMAGE=$kernel_dir/out/arch/arm64/boot/dtbo.img
-version="v2.11"
+version="v3.0"
 build_date="$(date +"%d-%m-%Y")"
-kernel_version=4.19.318
+kernel_version=4.19.325
+ksu_next_apk_name=KernelSU_Next_v1.0.5_12430-release.apk
+ksu_next_apk=https://github.com/KernelSU-Next/KernelSU-Next/releases/download/v1.0.5/KernelSU_Next_v1.0.5_12430-release.apk
 kernel_name="NeverSettle-Kernel-$version-avicii"
 zip_name="$kernel_name-$(date +"%d%m%Y-%H%M").zip"
 TC_DIR=$HOME/tc/
@@ -121,11 +123,13 @@ completion() {
     sed -i "s/Based on Linux Kernel KERNEL_VERSION_STRING/Based on Linux Kernel $kernel_version/g" META-INF/com/google/android/update-binary
     zip -r $zip_name *
     mv $kf/$zip_name $HOME/$zip_name
+    curl -sL ${ksu_apk} > $HOME/${ksu_next_apk_name}
     END=$(date +"%s")
     DIFF=$(($END - $START))
     BUILDTIME=$(echo $((${END} - ${START})) | awk '{print int ($1/3600)" Hours:"int(($1/60)%60)"Minutes:"int($1%60)" Seconds"}')
     tg_post_build "$HOME/$zip_name" "Build took : $((DIFF / 60)) minute(s) and $((DIFF % 60)) second(s)"
     tg_post_msg "<b>Changelog ($(date +%d-%m-%Y))</b>%0A<code>$CHANGELOG</code>"
+    tg_post_build "$HOME/${ksu_next_apk_name}" "KernelSU-Next Manager for this build"
     tg_post_msg "<code>Compiled successfully✅</code>"
     tg_post_msg "<b>Support the developer❤️</b>%0A<b>UPI:</b> <code>sreeshankark@axl</code>%0A<b>Paypal:</b> PayPal.me/SreeshankarK"
     curl --upload-file $HOME/$zip_name https://free.keep.sh
