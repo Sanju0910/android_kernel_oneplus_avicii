@@ -1,0 +1,38 @@
+name: Push latest KernelSU-Next Source
+on:
+  workflow_dispatch:
+  schedule:
+     - cron: '0 */6 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        submodules: 'true'
+        fetch-depth: 0
+
+    - name: Update Repo
+      id: version
+      run: |
+        git config --global user.name "sreeshankark"
+        git config --global user.email "sreeshankar0910@gmail.com"
+        git submodule sync
+        git submodule update --init --recursive
+        cd $GITHUB_WORKSPACE/KernelSU-Next
+        git checkout next
+        git pull
+        cd .. && git add .
+        git commit -m "KernelSU-Next: Sync with repo"
+        export NEW=$(git rev-parse HEAD)
+        echo "NEW_SHA=$NEW" >> $GITHUB_OUTPUT
+    - name: Push
+      if: "${{ github.sha != steps.version.outputs.NEW_SHA && env.ACCESS_TOKEN != ''}}"
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.ACCESS_TOKEN }}
