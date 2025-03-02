@@ -43,12 +43,12 @@
 #define PLL_ALPHA_VAL_U(p)	((p)->offset + (p)->regs[PLL_OFF_ALPHA_VAL_U])
 
 #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
-#define PLL_POST_DIV_SHIFT	8
-#define PLL_POST_DIV_MASK(p)	GENMASK((p)->width, 0)
-#define PLL_ALPHA_EN		BIT(24)
-#define PLL_ALPHA_MODE		BIT(25)
-#define PLL_VCO_SHIFT		20
-#define PLL_VCO_MASK		0x3
+# define PLL_POST_DIV_SHIFT	8
+# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
+# define PLL_ALPHA_EN		BIT(24)
+# define PLL_ALPHA_MODE		BIT(25)
+# define PLL_VCO_SHIFT		20
+# define PLL_VCO_MASK		0x3
 
 #define PLL_USER_CTL_U(p)	((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U])
 #define PLL_USER_CTL_U1(p)	((p)->offset + (p)->regs[PLL_OFF_USER_CTL_U1])
